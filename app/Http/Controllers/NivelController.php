@@ -2,63 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nivel;
 use Illuminate\Http\Request;
 
 class NivelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $niveles = Nivel::all();
+        return view('niveles.index', compact('niveles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('niveles.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate(['nombre' => 'required']);
+        Nivel::create($request->all());
+        return redirect()->route('niveles.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Nivel $nivele)
     {
-        //
+        return view('niveles.edit', compact('nivele'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Nivel $nivele)
     {
-        //
+        $request->validate(['nombre' => 'required']);
+        $nivele->update($request->all());
+        return redirect()->route('niveles.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Nivel $nivele)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $nivele->delete();
+        return redirect()->route('niveles.index');
     }
 }
+

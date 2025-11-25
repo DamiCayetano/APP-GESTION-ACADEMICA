@@ -2,63 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seccion;
 use Illuminate\Http\Request;
 
 class SeccionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $secciones = Seccion::all();
+        return view('secciones.index', compact('secciones'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('secciones.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate(['nombre' => 'required']);
+        Seccion::create($request->all());
+        return redirect()->route('secciones.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Seccion $seccione)
     {
-        //
+        return view('secciones.edit', compact('seccione'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Seccion $seccione)
     {
-        //
+        $request->validate(['nombre' => 'required']);
+        $seccione->update($request->all());
+        return redirect()->route('secciones.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Seccion $seccione)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $seccione->delete();
+        return redirect()->route('secciones.index');
     }
 }
+

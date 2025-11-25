@@ -2,63 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
+use App\Models\Nivel;
+use App\Models\Grado;
 use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $cursos = Curso::with('nivel', 'grado')->get();
+        return view('cursos.index', compact('cursos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $niveles = Nivel::all();
+        $grados = Grado::all();
+        return view('cursos.create', compact('niveles', 'grados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'area' => 'required',
+            'nivel_id' => 'required',
+            'grado_id' => 'required',
+            'horas_semanales' => 'required|numeric',
+            'estado' => 'required'
+        ]);
+
+        Curso::create($request->all());
+        return redirect()->route('cursos.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Curso $curso)
     {
-        //
+        $niveles = Nivel::all();
+        $grados = Grado::all();
+        return view('cursos.edit', compact('curso', 'niveles', 'grados'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Curso $curso)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'area' => 'required',
+            'nivel_id' => 'required',
+            'grado_id' => 'required',
+            'horas_semanales' => 'required|numeric',
+            'estado' => 'required'
+        ]);
+
+        $curso->update($request->all());
+        return redirect()->route('cursos.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Curso $curso)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $curso->delete();
+        return redirect()->route('cursos.index');
     }
 }
+

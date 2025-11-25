@@ -2,63 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Matricula;
+use App\Models\Alumno;
+use App\Models\Nivel;
+use App\Models\Grado;
+use App\Models\Seccion;
 use Illuminate\Http\Request;
 
 class MatriculaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $matriculas = Matricula::with('alumno', 'nivel', 'grado', 'seccion')->get();
+        return view('matriculas.index', compact('matriculas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('matriculas.create', [
+            'alumnos' => Alumno::all(),
+            'niveles' => Nivel::all(),
+            'grados' => Grado::all(),
+            'secciones' => Seccion::all(),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'alumno_id' => 'required',
+            'nivel_id' => 'required',
+            'grado_id' => 'required',
+            'seccion_id' => 'required',
+            'anio_academico' => 'required',
+        ]);
+
+        Matricula::create($request->all());
+        return redirect()->route('matriculas.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Matricula $matricula)
     {
-        //
+        return view('matriculas.edit', [
+            'matricula' => $matricula,
+            'alumnos' => Alumno::all(),
+            'niveles' => Nivel::all(),
+            'grados' => Grado::all(),
+            'secciones' => Seccion::all(),
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Matricula $matricula)
     {
-        //
+        $request->validate([
+            'alumno_id' => 'required',
+            'nivel_id' => 'required',
+            'grado_id' => 'required',
+            'seccion_id' => 'required',
+            'anio_academico' => 'required',
+        ]);
+
+        $matricula->update($request->all());
+        return redirect()->route('matriculas.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Matricula $matricula)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $matricula->delete();
+        return redirect()->route('matriculas.index');
     }
 }
+
