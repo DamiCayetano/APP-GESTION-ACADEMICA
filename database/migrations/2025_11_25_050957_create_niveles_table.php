@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('niveles', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('estado')->default('Activo'); // <- agregamos esta columna
             $table->timestamps();
         });
     }
@@ -26,3 +27,4 @@ return new class extends Migration
         Schema::dropIfExists('niveles');
     }
 };
+

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('grados', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre'); // 1°, 2°, 3°
-            $table->foreignId('nivel_id')->constrained();
+            $table->string('nombre');
+            $table->foreignId('nivel_id')->constrained('niveles');
             $table->timestamps();
         });
     }

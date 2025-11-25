@@ -6,23 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('secciones', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre'); // A, B, C
+            $table->string('nombre');
+            
+            // Columna para la relación con grados
+            $table->foreignId('grado_id')->constrained('grados')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('secciones');
     }
 };
+

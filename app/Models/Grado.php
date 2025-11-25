@@ -13,6 +13,11 @@ class Grado extends Model
         return $this->belongsTo(Nivel::class);
     }
 
+    public function secciones()
+    {
+        return $this->hasMany(Seccion::class);
+    }
+
     public function cursos()
     {
         return $this->hasMany(Curso::class);

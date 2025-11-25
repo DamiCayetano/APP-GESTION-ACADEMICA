@@ -103,11 +103,15 @@
     display: inline-block;
 }
 
-.dot-activo { background: #50B332; }
-.dot-inactivo { background: #F4CA64; }
+.estado.activo { color: #50B332; }
+.estado.inactivo { color: #D32F2F; }
+
+.dot-activo { background-color: #50B332; }
+.dot-inactivo { background-color: #D32F2F; }
+
 
 /* ACCIONES */
-.acciones {
+.acciones-tabla {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -129,8 +133,5 @@
     width: 30px;
     height: 30px;
 }
-
-
-
 
 

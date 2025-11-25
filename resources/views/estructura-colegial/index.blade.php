@@ -9,13 +9,13 @@
     <h1>Estructura Colegial</h1>
     <section class="herramientas-colegial">
         <section class="acciones">
-            <a href="">
+            <a href="#">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.33325 5H4.99992V6.66667H3.33325V5ZM3.33325 9.16667H4.99992V10.8333H3.33325V9.16667ZM3.33325 13.3333H4.99992V15H3.33325V13.3333ZM16.6666 6.66667V5H6.68575V6.66667H15.6666H16.6666ZM6.66659 9.16667H16.6666V10.8333H6.66659V9.16667ZM6.66659 13.3333H16.6666V15H6.66659V13.3333Z" fill="#6D6F8A" />
                 </svg>
                 Listar
             </a>
-            <a href="">
+            <a href="#">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M16.6666 6.66675L11.6666 1.66675H4.99992C4.55789 1.66675 4.13397 1.84234 3.82141 2.1549C3.50885 2.46746 3.33325 2.89139 3.33325 3.33341V16.6667C3.33325 17.1088 3.50885 17.5327 3.82141 17.8453C4.13397 18.1578 4.55789 18.3334 4.99992 18.3334H14.9999C15.4419 18.3334 15.8659 18.1578 16.1784 17.8453C16.491 17.5327 16.6666 17.1088 16.6666 16.6667V6.66675ZM7.49992 15.8334H5.83325V8.33341H7.49992V15.8334ZM10.8333 15.8334H9.16658V10.8334H10.8333V15.8334ZM14.1666 15.8334H12.4999V13.3334H14.1666V15.8334ZM11.6666 7.50008H10.8333V3.33341L14.9999 7.50008H11.6666Z" fill="#6D6F8A" />
                 </svg>
@@ -24,6 +24,7 @@
         </section>
         <input class="buscar" type="text" placeholder="Busque un nivel">
     </section>
+
     <section class="registro-colegial">
         <table border="1">
             <tr>
@@ -34,11 +35,17 @@
                 <th>Acciones</th>
             </tr>
 
+            @foreach($niveles as $nivel)
+            @foreach($nivel->grados as $grado)
             <tr>
-                <td>Inicial</td>
-                <td>3° Añitos</td>
-                <td>"A" "B" "C"</td>
-                <td>Activo</td>
+                <td>{{ $nivel->nombre }}</td>
+                <td>{{ $grado->nombre }}</td>
+                <td>
+                    @foreach($grado->secciones as $seccion)
+                    {{ $seccion->nombre }}@if(!$loop->last), @endif
+                    @endforeach
+                </td>
+                <td>{{ $nivel->estado }}</td>
                 <td class="edit">
                     <svg width="115" height="30" viewBox="0 0 115 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 5C0 2.23858 2.23858 0 5 0H109.2C111.961 0 114.2 2.23858 114.2 5V25C114.2 27.7614 111.961 30 109.2 30H5C2.23858 30 0 27.7614 0 25V5Z" fill="#557BEB" />
@@ -48,14 +55,19 @@
                     </svg>
                 </td>
             </tr>
+            @endforeach
+            @endforeach
+
         </table>
-        <form class="form-colegial">
+
+        <form class="form-colegial" action="{{ route('niveles.store') }}" method="POST">
+            @csrf
 
             <p class="titulo-form">Creación de un nivel</p>
 
             <!-- Nivel -->
             <label for="nivel">Nivel</label>
-            <select id="nivel" name="nivel">
+            <select id="nivel" name="nivel" required>
                 <option value="">Seleccione un nivel</option>
                 <option value="Inicial">Inicial</option>
                 <option value="Primaria">Primaria</option>
@@ -64,7 +76,7 @@
 
             <!-- Grado -->
             <label for="grado">Grado</label>
-            <select id="grado" name="grado">
+            <select id="grado" name="grado" required>
                 <option value="">Seleccione un grado</option>
                 <option value="1">1°</option>
                 <option value="2">2°</option>
@@ -77,19 +89,17 @@
             <!-- Sección -->
             <label>Sección</label>
             <div class="secciones">
-
-                <label><input type="checkbox" name="seccion[]" value="A"> “A”</label>
-                <label><input type="checkbox" name="seccion[]" value="B"> “B”</label>
-                <label><input type="checkbox" name="seccion[]" value="C"> “C”</label>
-
-                <label><input type="checkbox" name="seccion[]" value="D"> “D”</label>
-                <label><input type="checkbox" name="seccion[]" value="E"> “E”</label>
+                <label><input type="checkbox" name="seccion[]" value="A"> A</label>
+                <label><input type="checkbox" name="seccion[]" value="B"> B</label>
+                <label><input type="checkbox" name="seccion[]" value="C"> C</label>
+                <label><input type="checkbox" name="seccion[]" value="D"> D</label>
+                <label><input type="checkbox" name="seccion[]" value="E"> E</label>
                 <label><input type="checkbox" name="seccion[]" value="Otros"> Otros</label>
             </div>
 
             <!-- Estado -->
             <label for="estado">Estado</label>
-            <select id="estado" name="estado">
+            <select id="estado" name="estado" required>
                 <option value="">Seleccione</option>
                 <option value="Activo">Activo</option>
                 <option value="Inactivo">Inactivo</option>
@@ -100,10 +110,8 @@
                 <button type="submit" class="btn-crear">Crear</button>
                 <button type="button" class="btn-cancelar">Cancelar</button>
             </div>
-
         </form>
 
     </section>
 </section>
-
 @endsection

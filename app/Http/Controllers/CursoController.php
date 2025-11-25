@@ -37,15 +37,18 @@ class CursoController extends Controller
         return redirect()->route('cursos.index');
     }
 
-    public function edit(Curso $curso)
+    public function edit($id)
     {
+        $curso = Curso::findOrFail($id);
         $niveles = Nivel::all();
         $grados = Grado::all();
         return view('cursos.edit', compact('curso', 'niveles', 'grados'));
     }
 
-    public function update(Request $request, Curso $curso)
+    public function update(Request $request, $id)
     {
+        $curso = Curso::findOrFail($id);
+
         $request->validate([
             'nombre' => 'required',
             'area' => 'required',
@@ -56,8 +59,18 @@ class CursoController extends Controller
         ]);
 
         $curso->update($request->all());
-        return redirect()->route('cursos.index');
+
+        return redirect()->route('cursos.index')->with('success', 'Curso actualizado correctamente');
     }
+
+
+    public function show($id)
+    {
+        $curso = Curso::with('nivel', 'grado')->findOrFail($id);
+        return view('cursos.show', compact('curso'));
+    }
+
+
 
     public function destroy(Curso $curso)
     {
@@ -65,4 +78,3 @@ class CursoController extends Controller
         return redirect()->route('cursos.index');
     }
 }
-

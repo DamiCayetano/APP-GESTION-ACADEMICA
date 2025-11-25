@@ -3,44 +3,98 @@
 namespace App\Http\Controllers;
 
 use App\Models\Nivel;
+use App\Models\Grado;
+use App\Models\Seccion;
 use Illuminate\Http\Request;
 
 class NivelController extends Controller
 {
     public function index()
     {
-        $niveles = Nivel::all();
-        return view('niveles.index', compact('niveles'));
+        $niveles = Nivel::with('grados.secciones')->get();
+        return view('estructura-colegial.index', compact('niveles'));
     }
 
+    public function estructura()
+    {
+        $niveles = Nivel::with('grados.secciones')->get();
+        return view('estructura-colegial.index', compact('niveles'));
+    }
+
+    /** =============================
+     *  FORMULARIO PARA CREAR
+     * =============================*/
     public function create()
     {
-        return view('niveles.create');
+        return view('estructura-colegial.create');
     }
 
+    /** =============================
+     *  GUARDAR NUEVO NIVEL
+     * =============================*/
     public function store(Request $request)
     {
-        $request->validate(['nombre' => 'required']);
-        Nivel::create($request->all());
-        return redirect()->route('niveles.index');
+        $request->validate([
+            'nivel' => 'required',
+            'estado' => 'required',
+            'grado' => 'required',
+            'seccion' => 'required|array'
+        ]);
+
+        $nivel = Nivel::create([
+            'nombre' => $request->nivel,
+            'estado' => $request->estado
+        ]);
+
+        $grado = $nivel->grados()->create([
+            'nombre' => $request->grado
+        ]);
+
+        foreach ($request->seccion as $sec) {
+            $grado->secciones()->create([
+                'nombre' => $sec
+            ]);
+        }
+
+        return redirect()->route('niveles.index')->with('success', 'Nivel creado correctamente.');
     }
 
-    public function edit(Nivel $nivele)
+    /** =============================
+     *  FORMULARIO PARA EDITAR
+     * =============================*/
+    public function edit($id)
     {
-        return view('niveles.edit', compact('nivele'));
+        $nivel = Nivel::with('grados.secciones')->findOrFail($id);
+        return view('estructura-colegial.edit', compact('nivel'));
     }
 
-    public function update(Request $request, Nivel $nivele)
+    /** =============================
+     *  GUARDAR CAMBIOS
+     * =============================*/
+    public function update(Request $request, $id)
     {
-        $request->validate(['nombre' => 'required']);
-        $nivele->update($request->all());
-        return redirect()->route('niveles.index');
+        $request->validate([
+            'nivel' => 'required',
+            'estado' => 'required',
+        ]);
+
+        $nivel = Nivel::findOrFail($id);
+        $nivel->update([
+            'nombre' => $request->nivel,
+            'estado' => $request->estado
+        ]);
+
+        return redirect()->route('niveles.index')->with('success', 'Nivel actualizado correctamente.');
     }
 
-    public function destroy(Nivel $nivele)
+    /** =============================
+     *  ELIMINAR
+     * =============================*/
+    public function destroy(Nivel $nivel)
     {
-        $nivele->delete();
-        return redirect()->route('niveles.index');
+        $nivel->delete();
+        return redirect()->route('niveles.index')->with('success', 'Nivel eliminado.');
     }
 }
+
 
