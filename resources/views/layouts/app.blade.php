@@ -1,36 +1,69 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'Dashboard' }}</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+</head>
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+{{-- Aquí cargarán los estilos adicionales de cada vista --}}
+@stack('styles')
+</head>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+<body>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+    <!-- SIDEBAR -->
+    <aside>
+        <section class="modulos-aside">
+            <img src="{{ asset('img/app/logo.png') }}" alt="logo">
+            <nav>
+                <a href="{{ route('estructura.index') }}">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.6667 6.66663H3.33341C2.41425 6.66663 1.66675 7.41413 1.66675 8.33329V16.6666C1.66675 17.5858 2.41425 18.3333 3.33341 18.3333H11.6667C12.5859 18.3333 13.3334 17.5858 13.3334 16.6666V8.33329C13.3334 7.41413 12.5859 6.66663 11.6667 6.66663Z" fill="currentColor" />
+                        <path d="M16.6667 1.66663H8.33341C7.89139 1.66663 7.46746 1.84222 7.1549 2.15478C6.84234 2.46734 6.66675 2.89127 6.66675 3.33329V4.99996H13.3334C13.7754 4.99996 14.1994 5.17555 14.5119 5.48811C14.8245 5.80068 15.0001 6.2246 15.0001 6.66663V13.3333H16.6667C17.1088 13.3333 17.5327 13.1577 17.8453 12.8451C18.1578 12.5326 18.3334 12.1087 18.3334 11.6666V3.33329C18.3334 2.89127 18.1578 2.46734 17.8453 2.15478C17.5327 1.84222 17.1088 1.66663 16.6667 1.66663Z" fill="currentColor" />
+                    </svg>
+                    Estructura colegial</a>
+                <a href="{{ route('cursos.index') }}">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.6667 2.5H3.33341C2.41425 2.5 1.66675 3.2475 1.66675 4.16667V15.8333C1.66675 16.7525 2.41425 17.5 3.33341 17.5H16.6667C17.5859 17.5 18.3334 16.7525 18.3334 15.8333V4.16667C18.3334 3.2475 17.5859 2.5 16.6667 2.5ZM3.33341 15.8333V4.16667H9.16675V15.8333H3.33341ZM10.8334 15.8333V4.16667H16.6667L16.6676 15.8333H10.8334Z" fill="currentColor" />
+                        <path d="M12.5 5.83337H15V7.50004H12.5V5.83337ZM12.5 9.16671H15V10.8334H12.5V9.16671Z" fill="currentColor" />
+                    </svg>
+                    Cursos</a>
+                <a href="{{ route('docentes.index') }}">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.6667 2.5H3.33341C2.41425 2.5 1.66675 3.2475 1.66675 4.16667V13.3333C1.66675 14.2525 2.41425 15 3.33341 15H6.66675L5.16675 17L6.50008 18L8.75008 15H11.2501L13.5001 18L14.8334 17L13.3334 15H16.6667C17.5859 15 18.3334 14.2525 18.3334 13.3333V4.16667C18.3334 3.2475 17.5859 2.5 16.6667 2.5ZM3.33341 13.3333V4.16667H16.6667L16.6676 13.3333H3.33341Z" fill="currentColor" />
+                        <path d="M5 10H8.33333V11.6667H5V10Z" fill="currentColor" />
+                    </svg>
+                    Docentes</a>
+                <a href="{{ route('alumno.index') }}">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.6667 1.66663H6.66667C6.22464 1.66663 5.80072 1.84222 5.48816 2.15478C5.17559 2.46734 5 2.89127 5 3.33329V13.3333C5 13.7753 5.17559 14.1992 5.48816 14.5118C5.80072 14.8244 6.22464 15 6.66667 15H16.6667C17.1087 15 17.5326 14.8244 17.8452 14.5118C18.1577 14.1992 18.3333 13.7753 18.3333 13.3333V3.33329C18.3333 2.89127 18.1577 2.46734 17.8452 2.15478C17.5326 1.84222 17.1087 1.66663 16.6667 1.66663ZM11.6667 3.74996C12.2192 3.74996 12.7491 3.96945 13.1398 4.36015C13.5305 4.75085 13.75 5.28076 13.75 5.83329C13.75 6.38583 13.5305 6.91573 13.1398 7.30643C12.7491 7.69713 12.2192 7.91663 11.6667 7.91663C11.1141 7.91663 10.5842 7.69713 10.1935 7.30643C9.80283 6.91573 9.58333 6.38583 9.58333 5.83329C9.58333 5.28076 9.80283 4.75085 10.1935 4.36015C10.5842 3.96945 11.1141 3.74996 11.6667 3.74996ZM15.8333 12.5H7.5V12.2916C7.5 10.7508 9.37833 9.16663 11.6667 9.16663C13.955 9.16663 15.8333 10.7508 15.8333 12.2916V12.5Z" fill="currentColor" />
+                        <path d="M3.33341 6.66663H1.66675V16.6666C1.66675 17.5858 2.41425 18.3333 3.33341 18.3333H13.3334V16.6666H3.33341V6.66663Z" fill="currentColor" />
+                    </svg>
+                    Alumno</a>
+                <a href="{{ route('matriculas.index') }}">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.5 4.16667C17.5 3.2475 16.7525 2.5 15.8333 2.5H4.16667C3.2475 2.5 2.5 3.2475 2.5 4.16667V15.8333C2.5 16.7525 3.2475 17.5 4.16667 17.5H15.8333C16.7525 17.5 17.5 16.7525 17.5 15.8333V4.16667ZM4.16667 15.8333V4.16667H15.8333L15.835 15.8333H4.16667Z" fill="currentColor" />
+                        <path d="M5.83325 5.83337H7.49825V7.50004H5.83325V5.83337ZM9.16659 5.83337H14.1666V7.50004H9.16659V5.83337ZM5.83325 9.16671H7.49825V10.8334H5.83325V9.16671ZM9.16659 9.16671H14.1666V10.8334H9.16659V9.16671ZM5.83325 12.5H7.49825V14.1667H5.83325V12.5ZM9.16659 12.5H14.1666V14.1667H9.16659V12.5Z" fill="currentColor" />
+                    </svg>
+                    Matrículas</a>
+            </nav>
+        </section>
+        <a class="cerrar-sesion" href="">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.3334 10.8333V9.16663H5.83342V6.66663L1.66675 9.99996L5.83342 13.3333V10.8333H13.3334Z" fill="#51515E" />
+                <path d="M16.6667 2.5H9.16667C8.2475 2.5 7.5 3.2475 7.5 4.16667V7.5H9.16667V4.16667H16.6667V15.8333H9.16667V12.5H7.5V15.8333C7.5 16.7525 8.2475 17.5 9.16667 17.5H16.6667C17.5858 17.5 18.3333 16.7525 18.3333 15.8333V4.16667C18.3333 3.2475 17.5858 2.5 16.6667 2.5Z" fill="#51515E" />
+            </svg>
+            Cerrar Sesión
+        </a>
+    </aside>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    <!-- CONTENIDO PRINCIPAL (slot) -->
+    <main class="flex-1 p-6">
+        @yield('content')
+    </main>
+</body>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
 </html>

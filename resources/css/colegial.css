@@ -1,0 +1,199 @@
+.container-colegial{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.container-colegial h1{
+    color: #2D2D3A;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.herramientas-colegial{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.acciones{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.acciones a{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #6D6F8A;
+    font-size: 15px;
+}
+
+.buscar{
+    width: 100%;
+    max-width: 388px;
+    border: 1px solid #DEDEE8;
+    border-radius: 50px;
+    padding: 10px 15px;
+}
+
+.buscar input::placeholder {
+    color: #AAAABD;
+    font-size: 15px;  
+}
+
+/* CONTENEDOR PRINCIPAL */
+.registro-colegial {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ========================= */
+/*        TABLA             */
+/* ========================= */
+
+.registro-colegial table {
+    width: 500px;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.registro-colegial th {
+    background: #f7f7f7;
+    padding: 12px;
+    font-weight: bold;
+    color: #444;
+    text-align: center;
+}
+
+.registro-colegial td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.registro-colegial tr:last-child td {
+    border-bottom: none;
+}
+
+/* Botón Editar */
+.edit {
+    width: 100px;
+    cursor: pointer;
+}
+
+
+/* ========================= */
+/*        FORMULARIO         */
+/* ========================= */
+
+.form-colegial {
+    width: 350px;
+    background: #fff;
+    padding: 20px 22px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.form-colegial .titulo-form {
+    background: #55679C;
+    color: white;
+    padding: 10px 12px;
+    font-weight: 600;
+    margin: -20px -22px 20px -22px;
+    border-radius: 10px 10px 0 0;
+    font-size: 16px;
+}
+
+/* Labels */
+.form-colegial label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+/* Selects y inputs */
+.form-colegial select,
+.form-colegial input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.form-colegial select:focus,
+.form-colegial input:focus {
+    border-color: #557BEB;
+    outline: none;
+}
+
+/* Secciones (checkboxes) */
+.secciones {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 20px;
+    margin-bottom: 15px;
+}
+
+.secciones label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.secciones input {
+    width: 16px;
+    height: 16px;
+}
+
+/* ========================= */
+/*        BOTONES            */
+/* ========================= */
+
+.botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.btn-crear,
+.btn-cancelar {
+    width: 48%;
+    padding: 10px 0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+/* Crear */
+.btn-crear {
+    background: #55679C;
+    color: white;
+}
+
+/* Cancelar */
+.btn-cancelar {
+    background: #D9534F;
+    color: white;
+}
+
+.btn-cancelar:hover {
+    background: #c64643;
+}
+
+.btn-crear:hover {
+    background: #38478c;
+}
+
+
+

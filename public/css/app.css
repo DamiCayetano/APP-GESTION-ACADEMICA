@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    display: flex;
+    height: 100vh; /* Esto asegura que el body ocupe toda la pantalla */
+    overflow: hidden; /* Evita que toda la página tenga scroll */
+}
+
+aside {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 100vh; 
+}
+
+.modulos-aside{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+nav{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+nav a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    color: #51515E;
+    font-size: 16px;
+}
+
+.cerrar-sesion{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    color: #51515E;
+}
+
+nav a:hover{
+    background-color: #55679C;
+    border-radius: 50px;
+    color: white;
+}
+
+main{
+    padding: 48px 24px;
+    flex-grow: 1;             /* Para que ocupe el resto del espacio */
+    overflow-y: auto;         /* 🔥 SOLO MAIN TIENE SCROLL */
+    height: 100%;             /* Necesario para el scroll */
+}
+
+@media (min-width: 1440px) {
+
+    main {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto; /* Centrar bloque */
+        gap: 40px;      /* Separación entre tabla y formulario */
+    }
+}
